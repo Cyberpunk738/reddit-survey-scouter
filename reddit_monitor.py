@@ -182,6 +182,10 @@ class RedditMonitor:
         Retrieve new posts across all enabled discovery modes (Search and/or Subreddits),
         deduplicating in-memory across the two sources.
         """
+        if not self.is_configured():
+            logger.warning("Reddit credentials not yet configured. Health check active, waiting for API keys...")
+            return []
+
         combined: Dict[str, Dict[str, Any]] = {}
 
         # Mode A: Keyword Search
