@@ -1,0 +1,39 @@
+# Render Blueprint for Reddit Survey Scout
+# Deploys as a Free Web Service with a built-in health check to keep it alive
+services:
+  - type: web
+    name: reddit-survey-scout
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: REDDIT_CLIENT_ID
+        sync: false
+      - key: REDDIT_CLIENT_SECRET
+        sync: false
+      - key: REDDIT_USER_AGENT
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: CHECK_INTERVAL_SECONDS
+        value: 60
+      - key: MIN_MATCH_SCORE
+        value: 5
+      - key: MAX_POST_AGE_HOURS
+        value: 24
+      - key: ENABLE_REDDIT_SEARCH
+        value: true
+      - key: ENABLE_SUBREDDIT_MONITORING
+        value: true
+      - key: SEND_STARTUP_MESSAGE
+        value: true
+      - key: ENABLE_HEALTHCHECK
+        value: true
